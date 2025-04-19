@@ -142,7 +142,6 @@ inline void List<T>::insertionSort(Node<T> *obj1, Node<T> *obj2)
 
             pPrev->getNext() = pCur->.getNext();
             pCur.getPrev() = pPrev->getPrev();
-        
             
 
 
