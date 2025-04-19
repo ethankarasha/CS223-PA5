@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "unordered_map": "cpp",
+        "string": "cpp",
+        "vector": "cpp",
+        "memory": "cpp",
+        "string_view": "cpp",
+        "system_error": "cpp",
+        "iosfwd": "cpp",
+        "ostream": "cpp",
+        "*.tcc": "cpp"
+    }
+}
