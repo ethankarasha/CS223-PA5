@@ -16,11 +16,12 @@ public:
     void setHead(Node<T>* newHead);
     T find(int index);
 
-    void insertionSort(Node<T>* obj1, Node<T>* obj2);
+    void insertionSort(int type); // 1 for asc, 2 for desc
 
 private:
     Node<T>* pHead;
     bool sortAsc(double obj1, double obj2);
+    bool sortDesc(double obj1, double obj2);
     void destroyList(Node<T>* pHead);
 
 };
@@ -67,7 +68,8 @@ inline void List<T>::print()
     while(pCur != nullptr) // traverses through the list, and uses the overloaded operator to print data
     {
         cout << "Uniq Id: " << pCur->getData().getUniqId() << endl
-        << "Product Name: " << pCur->getData().getProductName() << endl << endl;
+        << "Product Name: " << pCur->getData().getProductName() << endl 
+        << "Selling Price: " << pCur->getData().getSellingPrice() << endl;
 
         pCur = pCur->getNext();
     }
@@ -125,35 +127,93 @@ inline T List<T>::find(int index) //finds node at a given index and returns the 
 }
 
 template <typename T>
-inline void List<T>::insertionSort(Node<T> *obj1, Node<T> *obj2)
+inline void List<T>::insertionSort(int type)
 {
-    
     for (int i = 1; i < this->numNodes(); i++)
     {
-        j = i;
-
-        Node<T>* pCur = find(j);
-        Node<T>* pPrev = find(j - 1);
-
-        while(sortAsc(pCur->getData().getSellingPrice(), pPrev->getData().getSellingPrice()) || j != 0)
+        Node<T>* pCur = pHead;
+        for(int k = 0; k < i; k++)
         {
-            pCur = find(j);
-            pPrev = find(j - 1);
+            pCur = pCur->getNext();
+        }
+        
+        Node<T>* pPrev = pCur->getPrev();
 
-            pPrev->getNext() = pCur->.getNext();
-            pCur.getPrev() = pPrev->getPrev();
+        if (type == 1)
+        {
+            while(pCur != pHead && sortAsc(pCur->getData().getSellingPrice(), pPrev->getData().getSellingPrice()))
+            {
+        
+                pPrev->setNext(pCur->getNext());
+                pCur->setNext(pPrev);
+                if (pPrev->getPrev() != nullptr)
+                {
+                    pPrev->getPrev()->setNext(pCur);
+                }
+    
+                pCur->setPrev(pPrev->getPrev());
+                pPrev->setPrev(pCur);
+    
+                if (pPrev->getNext() != nullptr)
+                {
+                    pPrev->getNext()->setPrev(pPrev);
+                }
+                
+                if(pPrev->getData().getUniqId() == pHead->getData().getUniqId())
+                {
+                    pHead = pCur;
+                    pPrev = nullptr;
+                }
+                else
+                {
+                    pPrev = pCur->getPrev();
+                }
+            }
+        }
+        if (type == 2)
+        {
+            while(pCur != pHead && sortDesc(pCur->getData().getSellingPrice(), pPrev->getData().getSellingPrice()))
+        {
+    
+            pPrev->setNext(pCur->getNext());
+            pCur->setNext(pPrev);
+            if (pPrev->getPrev() != nullptr)
+            {
+                pPrev->getPrev()->setNext(pCur);
+            }
+
+            pCur->setPrev(pPrev->getPrev());
+            pPrev->setPrev(pCur);
+
+            if (pPrev->getNext() != nullptr)
+            {
+                pPrev->getNext()->setPrev(pPrev);
+            }
             
-
-
+            if(pPrev->getData().getUniqId() == pHead->getData().getUniqId())
+            {
+                pHead = pCur;
+                pPrev = nullptr;
+            }
+            else
+            {
+                pPrev = pCur->getPrev();
+            }
+        }
         }
     }
-
 }
 
 template <typename T>
 inline bool List<T>::sortAsc(double obj1, double obj2)
 {
     return obj1 < obj2;
+}
+
+template <typename T>
+inline bool List<T>::sortDesc(double obj1, double obj2)
+{
+    return obj1 > obj2;
 }
 
 template <typename T>

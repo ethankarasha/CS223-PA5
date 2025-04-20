@@ -24,7 +24,7 @@ Node<T>::Node(T newProduct)
 {
     product = newProduct; // calls overloaded assignment operator for T if necessary
     pNext = nullptr;
-    pPrev = nullptr
+    pPrev = nullptr;
 }
 
 template <typename T>

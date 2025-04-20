@@ -615,11 +615,20 @@ Product createProduct(ifstream& inputstream, vector<string>& categoryVec)
     newProduct.setPrice(line);
 
     // Selling Price
-    double price;
+    double price = 0.0;
     line.clear();
     line = readInQuotes(inputstream);
     line.erase(remove(line.begin(), line.end(), '$'), line.end());
-    price = stod(line);
+    line.erase(remove(line.begin(), line.end(), '\"'), line.end());
+    line.resize(5);
+    line.erase(remove(line.begin(), line.end(), ' '), line.end());
+
+    if (isdigit(line[0]))
+    {
+        price = stod(line);
+    }
+
+    
     newProduct.setSellingPrice(price);
 
     // Quantity

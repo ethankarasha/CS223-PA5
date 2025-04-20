@@ -191,6 +191,8 @@ inline void HashTable<T>::listInventory(string key, vector<string> categoryVec) 
         cout << "NULL" << endl;
     }
 
+    cout << "List Size: " << productTable[index].numNodes() << endl;
+    productTable[index].insertionSort(2);
     productTable[index].print(); // print out the list
 
     // for more info if wanted
