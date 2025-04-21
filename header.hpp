@@ -11,7 +11,12 @@
 #include <iterator>
 #include <cmath>
 #include <functional>
-#include <xxhash.h>
+
+extern "C"
+{
+    #include "xxhash.h"
+}
+
 #include "MurmurHash3.h" // Make sure you have the header file
 
 

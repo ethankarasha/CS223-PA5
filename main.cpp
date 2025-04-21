@@ -16,7 +16,10 @@ bool validCommand(string line)
 {
     return (line == ":help") ||
            (line.rfind("find", 0) == 0) ||
-           (line.rfind("listInventory") == 0);
+           (line.rfind("listInventory") == 0) ||
+           (line.rfind("listInventory desc")) ||
+           (line.rfind("listInventory merge")) ||
+           (line.rfind("listInventory merge desc"));
 }
 
 void evalCommand(string line, const HashTable<Product> &probeHash, const HashTable<List<Product>> &chainHash, const vector<string> &categoryVec)
@@ -37,6 +40,34 @@ void evalCommand(string line, const HashTable<Product> &probeHash, const HashTab
 
         probeHash.find(ID);
     }
+    
+    else if (line.rfind("listInventory merge desc") == 0)
+    {
+        string category;
+        cout << "Enter the Category" << endl;
+        getline(cin, category);
+
+        chainHash.listInventory(category, categoryVec, 3);
+    }
+
+    else if (line.rfind("listInventory merge") == 0)
+    {
+        string category;
+        cout << "Enter the Category" << endl;
+        getline(cin, category);
+
+        chainHash.listInventory(category, categoryVec, 2);
+    }
+
+    else if (line.rfind("listInventory desc") == 0)
+    {
+        string category;
+        cout << "Enter the Category" << endl;
+        getline(cin, category);
+
+        chainHash.listInventory(category, categoryVec, 1);
+    }
+    
     // if line starts with listInventory
     else if (line.rfind("listInventory") == 0)
     {
@@ -45,8 +76,11 @@ void evalCommand(string line, const HashTable<Product> &probeHash, const HashTab
         cout << "Enter the Category" << endl;
         getline(cin, category);
 
-        chainHash.listInventory(category, categoryVec);
+        chainHash.listInventory(category, categoryVec, 0);
     }
+
+    
+
 }
 
 void bootStrap(HashTable<Product> &probeHash, HashTable<List<Product>> &chainHash, vector<string> &categoryVec)

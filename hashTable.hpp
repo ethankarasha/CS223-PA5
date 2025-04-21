@@ -18,7 +18,7 @@ public:
     void find(const string key) const;
     void insertProbe(T newProduct, int& numcollisons, int& numelements);
     void insertChain(Product newData, vector<string> categoryVec);
-    void listInventory(string key, vector<string> categoryVec) const;
+    void listInventory(string key, vector<string> categoryVec, int type) const;
 
 private:
     int collisionType; // 0 for chaining, 1 for probing
@@ -182,9 +182,11 @@ inline void HashTable<T>::insertChain(Product newData, vector<string> categoryVe
 }
 
 template <typename T>
-inline void HashTable<T>::listInventory(string key, vector<string> categoryVec) const
+inline void HashTable<T>::listInventory(string key, vector<string> categoryVec, int type) const
 {
     int index = getIndexCh(categoryVec, key);
+    List<Product> list;
+    Node<Product>* sortedHead;
 
     if (productTable[index].getHead() == nullptr)
     {
@@ -192,8 +194,62 @@ inline void HashTable<T>::listInventory(string key, vector<string> categoryVec) 
     }
 
     cout << "List Size: " << productTable[index].numNodes() << endl;
-    productTable[index].insertionSort(2);
-    productTable[index].print(); // print out the list
+
+    if (type == 0) // ascending insertion sort
+    {
+        clock_t start=clock();
+        productTable[index].insertionSort(1);
+        clock_t end=clock();
+
+        double elapsedTime = (double)(end - start)/CLOCKS_PER_SEC;
+
+        productTable[index].print();
+        cout << "Ascending Insertion Sort Time: " << elapsedTime << endl;
+
+    }
+
+    if (type == 1) // descending insertion sort
+    {
+        clock_t start=clock();
+        productTable[index].insertionSort(2);
+        clock_t end=clock();
+
+        double elapsedTime = (double)(end - start)/CLOCKS_PER_SEC;
+
+        productTable[index].print();
+        cout << "Descending Insertion Sort Time: " << elapsedTime << endl;
+
+    }
+
+    if (type == 2) // ascending merge sort 
+    {
+        clock_t start=clock();
+        sortedHead = mergeSort(productTable[index].getHead(), 1);
+        clock_t end=clock();
+
+        double elapsedTime = (double)(end - start)/CLOCKS_PER_SEC;
+
+        productTable[index].setHead(nullptr);
+        productTable[index].setHead(sortedHead);
+        productTable[index].print();
+        cout << "Ascending Merge Sort Time: " << elapsedTime << endl;
+
+    }
+    if (type == 3) // descending merge sort
+    {
+        clock_t start=clock();
+        sortedHead = mergeSort(productTable[index].getHead(), 2);
+        clock_t end=clock();
+
+        double elapsedTime = (double)(end - start)/CLOCKS_PER_SEC;
+        productTable[index].setHead(nullptr);
+        productTable[index].setHead(sortedHead);
+        productTable[index].print();
+        cout << "Descending Merge Sort Time: " << elapsedTime << endl;
+
+    }
+    
+    //productTable[index].print(); // print out the list
 
     // for more info if wanted
     // cout << "Index = " << index << endl;

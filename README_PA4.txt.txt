@@ -1,9 +1,0 @@
-README_PA4.txt
-
-This application is a REPL implemented using two Hash Tables. The operations that it supports is querying the database of Amazon Products by their Unique ID, and sort and printing products by category. 
-
-The first Hash Table is implemented using Quadratic Probing for handling collisions, however even through the use of multiple great hash functions, the collision rate was extremely high. As it didn't effect the usage of the table (the collisions were still resolved), it still hasn't been fixed but the plan is to come back and figure out why this is the case. This hash table was used for the find operation, as using the Unique ID's as keys allows the query to be found in constant time.
-
-The Second Hash Table was implemented using chaining to handle collisions, and there was an easy way to ensure that there were no collisions when figuring out where to place my buckets. While reading the file, I kept track of every unique category processed and inserted them into a vector, then their vector index became their hash index. With no collisions and a guaranteed unique index, find the List at a certain index was constant time also. Then it was just a matter of printing the list.
-
-Note: I'm not sure quite why this is, but when using listInventory on categories that had a very large amount of products, like Toys & Games for example, the terminal was not able to print out all of the products, stopping well short. However, there is a line that can be uncommented to show that the list size matches the amount of elements in the file that belong to the Toys & Games category.
